@@ -24,6 +24,8 @@ lazy val versions = new {
   val specs2 = "2.3.12"
 }
 
+enablePlugins(JavaServerAppPackaging)
+
 libraryDependencies ++= Seq(
   "com.twitter.finatra" %% "finatra-http" % versions.finatra,
   "com.twitter.finatra" %% "finatra-slf4j" % versions.finatra,
