@@ -11,8 +11,11 @@ before_install:
     - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
     - git submodule update --init --recursive
 
-services:
-  - docker
+# services:
+#   - docker
+
+install:
+  - curl -sLo - http://j.mp/install-travis-docker | sh -xe
 
 scala:
   - 2.11.7
