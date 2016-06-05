@@ -28,7 +28,7 @@ jdk:
   - oraclejdk7
   - oraclejdk8
 
-script: travis_retry sbt ++$TRAVIS_SCALA_VERSION clean test
+script: travis_retry sbt ++$TRAVIS_SCALA_VERSION clean server/test
 
 after_success:
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"

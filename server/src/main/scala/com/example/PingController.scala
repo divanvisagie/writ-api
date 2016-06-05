@@ -11,16 +11,7 @@ class PingController extends Controller {
 
   get("/ping") { request: Request =>
   	info("ping")
-
     val service = new PingServiceClient()
-
-    for {
-      swissGuardResponse <- service.svc.ping()
-    } yield {
-      swissGuardResponse
-    }
-    //"pong
+    service.svc.ping()
   }
-
-
 }

@@ -16,13 +16,4 @@ class PingServiceClient {
       .configured(param.Tracer(NullTracer))
       .configured(param.Stats(NullStatsReceiver))
       .newIface[PingService.FutureIface]("localhost:8888")
-
-  // def main(args: Array[String]) {
-  //
-  //   Await.ready(svc.ping()).onSuccess( f => {
-  //     println(s"ping response: ${f.toString}")
-  //   }).onFailure( err => {
-  //     println(s"error: ${err.getMessage}")
-  //   })
-  // }
 }
