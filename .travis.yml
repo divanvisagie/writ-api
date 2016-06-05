@@ -13,13 +13,7 @@ git:
 # Use sed to replace the SSH URL with the public URL, then initialize submodules
 before_install:
 
-     # reinstall docker-compose at specific version
-    - sudo rm /usr/local/bin/docker-compose
-    - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-    - chmod +x docker-compose
-    - sudo mv docker-compose /usr/local/bin
-    # end
-    - docker-compose up -d
+    - docker run -d -p 127.0.0.1:8888:9999 divanvisagie/swissguard
     - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
     - git submodule update --init --recursive
 
