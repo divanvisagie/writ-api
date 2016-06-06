@@ -29,5 +29,5 @@ script: travis_retry sbt ++$TRAVIS_SCALA_VERSION clean server/test
 after_success:
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - sbt server/docker:stage
-  - docker build -t divanvisagie/writ-api:latest target/docker/stage
+  - docker build -t divanvisagie/writ-api:latest server/target/docker/stage
   - docker push divanvisagie/writ-api:latest
