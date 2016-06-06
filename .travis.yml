@@ -1,10 +1,6 @@
 language: scala
 sudo: required
 
-env:
-    global:
-        - DOCKER_VERSION=1.10.1-0~trusty
-        - DOCKER_COMPOSE_VERSION=1.7.0
 
 # disable the default submodule logic
 git:
