@@ -1,11 +1,9 @@
 package com.writ.api
 
-import com.twitter.finagle.http.Status.Ok
+import com.twitter.finagle.http.Status._
 import com.twitter.finatra.http.test.EmbeddedHttpServer
-import com.twitter.finatra.thrift.thriftscala.ClientErrorCause.BadRequest
 import com.twitter.inject.Mockito
 import com.twitter.inject.server.FeatureTest
-
 import com.twitter.finatra.json.JsonDiff._
 
 class ExampleFeatureTest extends FeatureTest {
@@ -26,7 +24,26 @@ class ExampleFeatureTest extends FeatureTest {
 class LoginFeatureTest extends FeatureTest with Mockito {
   override val server = new EmbeddedHttpServer(new ExampleServer)
 
-  "/register" should {
+  "/login" should {
+    "return fail if wrong password" in {
+
+      server.httpPost(
+        path = "/login",
+        postBody =
+          """
+          {
+            "username": "jane",
+            "password" : "wrongpass"
+          }
+          """,
+        andExpect = Unauthorized
+      )
+
+    }
+  }
+
+
+  "/login with correct password" should {
     "return token" in {
 
       server.httpPost(
@@ -35,8 +52,7 @@ class LoginFeatureTest extends FeatureTest with Mockito {
           """
           {
             "username": "bob",
-            "password" : "bobby123",
-            "email" : "joe@soap.com"
+            "password" : "bobby123"
           }
           """,
         andExpect = Ok,
