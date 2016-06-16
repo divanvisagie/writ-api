@@ -11,7 +11,7 @@ import com.writ.api.domain.http.Response.LoginResponse
 import com.writ.api.services.UserService
 
 class LoginFeatureTest extends FeatureTest with Mockito {
-  override val server = new EmbeddedHttpServer(new ExampleServer)
+  override val server = new EmbeddedHttpServer(new WritApiServer)
 
   @Bind val userService = smartMock[UserService]
 

@@ -6,9 +6,9 @@ import com.twitter.finatra.http.filters.{CommonFilters, LoggingMDCFilter, TraceI
 import com.twitter.finatra.http.routing.HttpRouter
 import com.writ.api.controllers.{AuthenticationController, PingController}
 
-object WritApiServerMain extends ExampleServer
+object WritApiServerMain extends WritApiServer
 
-class ExampleServer extends HttpServer {
+class WritApiServer extends HttpServer {
 
   override def defaultFinatraHttpPort = ":9999"
 
