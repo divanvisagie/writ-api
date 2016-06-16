@@ -5,6 +5,7 @@ import javax.inject.Inject
 import com.swissguard.user.thriftscala.UserResponse
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.Controller
+import com.writ.api.domain.http.Response.LoginResponse
 import com.writ.api.domain.http.{LoginRequest, RegisterUserRequest}
 import com.writ.api.services.{PingService, UserServiceClient}
 
