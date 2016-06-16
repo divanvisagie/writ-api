@@ -2,12 +2,9 @@ package com.writ.api.controllers
 
 import javax.inject.Inject
 
-import com.swissguard.user.thriftscala.UserResponse
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.Controller
-import com.writ.api.domain.http.Response.LoginResponse
-import com.writ.api.domain.http.{LoginRequest, RegisterUserRequest}
-import com.writ.api.services.{PingService, UserServiceClient}
+import com.writ.api.services.PingService
 
 
 class PingController @Inject()(pingService: PingService) extends Controller {
@@ -18,17 +15,4 @@ class PingController @Inject()(pingService: PingService) extends Controller {
   }
 }
 
-class AuthenticationController @Inject()(userServiceClient: UserServiceClient)
-  extends Controller {
-  post("/register") { request: RegisterUserRequest =>
-    userServiceClient.client.createUser(
-      request.toThrift
-    )
-  }
 
-  post("/login") { request: LoginRequest =>
-    userServiceClient.client.login(request.toThrift) handle {
-      case _: Exception => response.status(401)
-    }
-  }
-}

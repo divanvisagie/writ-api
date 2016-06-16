@@ -58,7 +58,7 @@ class LoginFeatureTest extends FeatureTest with Mockito {
         andExpect = Ok,
         withJsonBody =
           """
-          {"id":1,"passthrough_fields":{},"token":"token-from-thrift","username":"bob"}
+          {"token":"token-from-thrift"}
           """
       )
 
