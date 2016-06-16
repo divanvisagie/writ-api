@@ -58,9 +58,11 @@ lazy val server = (project in file("server")).
       name := "writ-api",
       moduleName := "writ-api",
       libraryDependencies ++= Seq(
+
+        "org.scala-lang" % "scala-compiler" % scalaVersion.value,
         //brought in from thrift client
         "com.twitter" %% "finagle-core" % "6.34.0",
-        "com.twitter" %% "finagle-stats" % "6.34.0",
+//        "com.twitter" %% "finagle-stats" % "6.34.0",
         "com.twitter" % "finagle-thrift_2.11" % "6.34.0",
         "org.apache.thrift" % "libthrift" % "0.9.0" % "compile",
         //end of that
@@ -71,6 +73,7 @@ lazy val server = (project in file("server")).
         "ch.qos.logback" % "logback-classic" % versions.logback % "test",
 
         "com.twitter.finatra" %% "finatra-http" % versions.finatra % "test",
+        "com.twitter.finatra" %% "finatra-jackson" % versions.finatra % "test",
         "com.twitter.inject" %% "inject-server" % versions.finatra % "test",
         "com.twitter.inject" %% "inject-app" % versions.finatra % "test",
         "com.twitter.inject" %% "inject-core" % versions.finatra % "test",
@@ -78,6 +81,7 @@ lazy val server = (project in file("server")).
         "com.google.inject.extensions" % "guice-testlib" % versions.guice % "test",
 
         "com.twitter.finatra" %% "finatra-http" % versions.finatra % "test" classifier "tests",
+        "com.twitter.finatra" %% "finatra-jackson" % versions.finatra % "test" classifier "tests",
         "com.twitter.inject" %% "inject-server" % versions.finatra % "test" classifier "tests",
         "com.twitter.inject" %% "inject-app" % versions.finatra % "test" classifier "tests",
         "com.twitter.inject" %% "inject-core" % versions.finatra % "test" classifier "tests",
