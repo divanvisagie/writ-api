@@ -29,7 +29,7 @@ lazy val baseSettings = Seq(
 
 lazy val root = (project in file(".")).
   settings(
-    name := """finatra-thrift-seed""",
+    name := """writ-api""",
     organization := "com.example",
     moduleName := "activator-thrift-seed"
   ).

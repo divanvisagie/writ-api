@@ -6,7 +6,7 @@ import com.twitter.finatra.http.filters.{CommonFilters, LoggingMDCFilter, TraceI
 import com.twitter.finatra.http.routing.HttpRouter
 import com.writ.api.controllers.{AuthenticationController, PingController}
 
-object ExampleServerMain extends ExampleServer
+object WritApiServerMain extends ExampleServer
 
 class ExampleServer extends HttpServer {
 

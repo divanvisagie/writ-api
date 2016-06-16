@@ -2,7 +2,7 @@ package com.writ.api.services
 
 import javax.inject.Singleton
 
-import com.swissguard.user.thriftscala.UserService
+import com.swissguard.user.thriftscala.{UserService => TUserService}
 import com.twitter.finagle._
 import com.twitter.finagle.stats.NullStatsReceiver
 import com.twitter.finagle.tracing._
@@ -11,11 +11,11 @@ import com.writ.api.domain.http.Response.LoginResponse
 import com.writ.api.domain.http.{LoginRequest, RegisterUserRequest}
 
 @Singleton
-class UserServiceClient {
-  private val client: UserService[Future] = ThriftMux.client
+class UserService {
+  private val client: TUserService[Future] = ThriftMux.client
     .withTracer(NullTracer)
     .withStatsReceiver(NullStatsReceiver)
-    .newIface[UserService.FutureIface]("localhost:8888")
+    .newIface[TUserService.FutureIface]("localhost:8888")
 
   def createUser(user: RegisterUserRequest) = client.createUser(user.toThrift)
 
