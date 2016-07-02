@@ -24,7 +24,7 @@ object UserServiceModule extends TwitterModule {
   val tracer = ZipkinTracer.mk(
     host = zipkinHost,
     port = zipkinPort,
-    statsReceiver = receiver,
+    statsReceiver = receiver
   )
   @Singleton @Provides
   def providesUserServiceClient(): UserService[Future] =

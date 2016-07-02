@@ -1,6 +1,9 @@
 package com.writ.api
 
+import com.twitter.finagle.Http
 import com.twitter.finagle.http.{Request, Response}
+import com.twitter.finagle.stats.DefaultStatsReceiver
+import com.twitter.finagle.zipkin.thrift.ZipkinTracer
 import com.twitter.finatra.http.HttpServer
 import com.twitter.finatra.http.filters.{CommonFilters, LoggingMDCFilter, TraceIdMDCFilter}
 import com.twitter.finatra.http.routing.HttpRouter
@@ -22,6 +25,20 @@ class WritApiServer extends HttpServer {
       .filter[CommonFilters]
       .add[PingController]
       .add[AuthenticationController]
+  }
+
+  override def configureHttpServer(server: Http.Server): Http.Server = {
+    val receiver = DefaultStatsReceiver.get
+    val zipkinHost = sys.env.getOrElse("SG_ZIPKIN_HOST", "localhost")
+    val zipkinPort = sys.env.getOrElse("SG_ZIPKIN_PORT", "9410").toInt
+    val tracer = ZipkinTracer.mk(
+      host = zipkinHost,
+      port = zipkinPort,
+      statsReceiver = receiver
+    )
+    server
+      .withTracer(tracer)
+      .withLabel("writ-api-server")
   }
 
 }

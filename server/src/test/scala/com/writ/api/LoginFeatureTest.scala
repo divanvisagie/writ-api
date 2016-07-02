@@ -8,7 +8,7 @@ import com.twitter.inject.server.FeatureTest
 import com.twitter.util.Future
 import com.writ.api.domain.http.LoginRequest
 import com.writ.api.domain.http.Response.LoginResponse
-import com.writ.api.services.{AuthenticationService}
+import com.writ.api.services.AuthenticationService
 
 class LoginFeatureTest extends FeatureTest with Mockito {
   override val server = new EmbeddedHttpServer(new WritApiServer)
