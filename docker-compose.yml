@@ -1,7 +1,58 @@
 version: '2'
 services:
-    swissguard:
-        image: divanvisagie/swissguard
-        ports:
-            - "8888:9999"
-            - "8880:9990"
+  # SwissGuard
+  swissguard:
+    image: divanvisagie/swissguard
+    environment:
+      - SG_PG_INET=postgres:54321
+      - SG_PG_USERNAME=postgres
+      - SG_PG_PASSWORD=postgres
+      - SG_ZIPKIN_HOST=zipkin
+      - SG_ZIPKIN_PORT=9410
+    ports:
+      - "8888:9999"
+      - "8880:9990"
+    links:
+      - postgres:postgres
+      - zipkin:zipkin
+    depends_on:
+      - postgres
+      - zipkin
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=swissguard
+    ports:
+      - "54321:5432"
+
+
+  # Zipkin
+  storage:
+      image: openzipkin/zipkin-cassandra:1.1.5
+#      container_name: cassandra
+      ports:
+        - 9042:9042
+  # The zipkin process services the UI, and also exposes a POST endpoint that
+  # instrumentation can send trace data to. Scribe is enabled by default.
+  zipkin:
+    image: openzipkin/zipkin:1.1.5
+#    container_name: zipkin
+    environment:
+      - STORAGE_TYPE=cassandra
+      # When overriding this value, note the minimum supported version is 2.2
+      - CASSANDRA_CONTACT_POINTS=cassandra
+      # Uncomment to disable self-tracing
+      # - SELF_TRACING_ENABLED=false
+    links:
+      - storage:cassandra
+    ports:
+      # Listen port for the Scribe transport
+      - 9410:9410
+      # Historical port used for the Zipkin HTTP Api
+      - 9411:9411
+      # Zipkin UI used to be on a separate process listening on port 8080
+      - 8080:9411
+    depends_on:
+      - storage

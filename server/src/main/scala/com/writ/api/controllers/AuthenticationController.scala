@@ -4,18 +4,20 @@ import javax.inject.Inject
 
 import com.twitter.finatra.http.Controller
 import com.writ.api.domain.http.{LoginRequest, RegisterUserRequest}
-import com.writ.api.services.UserService
+import com.writ.api.services.AuthenticationService
 
-class AuthenticationController @Inject()(userService: UserService)
+class AuthenticationController @Inject()(authenticationService: AuthenticationService)
   extends Controller {
 
   post("/register") { request: RegisterUserRequest =>
-    userService createUser request
+    authenticationService.createUser(request) handle {
+      case _: Exception => response.conflict("User already exists")
+    }
   }
 
   post("/login") { request: LoginRequest =>
-    userService login request handle {
-      case _: Exception => response.status(401)
+    authenticationService.login(request) handle {
+      case _: Exception => response.unauthorized("Invalid login details")
     }
   }
 }

@@ -1,6 +1,6 @@
 package com.writ.api.domain.http
 
-import com.swissguard.user.thriftscala.UserRequest
+import com.swissguard.user.thriftscala.AuthenticationRequest
 import com.twitter.finatra.validation.Size
 
 
@@ -10,7 +10,7 @@ case class RegisterUserRequest(
   password: String) {
 
   def toThrift = {
-    UserRequest(
+    AuthenticationRequest(
       username = username,
       password = password
     )
@@ -22,7 +22,7 @@ case class LoginRequest(
   password: String
 ) {
   def toThrift = {
-    UserRequest(
+    AuthenticationRequest(
       username = username,
       password = password
     )
