@@ -8,19 +8,19 @@ import com.twitter.inject.server.FeatureTest
 import com.twitter.util.Future
 import com.writ.api.domain.http.LoginRequest
 import com.writ.api.domain.http.Response.LoginResponse
-import com.writ.api.services.UserService
+import com.writ.api.services.{AuthenticationService}
 
 class LoginFeatureTest extends FeatureTest with Mockito {
   override val server = new EmbeddedHttpServer(new WritApiServer)
 
-  @Bind val userService = smartMock[UserService]
+  @Bind val authenticationService = smartMock[AuthenticationService]
 
   val loginResponse = LoginResponse("token-from-mock")
 
 
   "/login" should {
     "return fail if wrong password" in {
-      userService.login(LoginRequest("jane","wrongpass")) returns
+      authenticationService.login(LoginRequest("jane","wrongpass")) returns
         Future.exception(new Exception("Invalid Password"))
 
       server.httpPost(
@@ -42,7 +42,7 @@ class LoginFeatureTest extends FeatureTest with Mockito {
   "/login with correct password" should {
     "return token" in {
 
-      userService.login(LoginRequest("bob","bobby123")) returns
+      authenticationService.login(LoginRequest("bob","bobby123")) returns
         Future(loginResponse)
 
 
